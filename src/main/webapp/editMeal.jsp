@@ -6,7 +6,7 @@
 </head>
 <title>Title</title>
 <body>
-<form method="post" action="${pageContext.request.contextPath}/meals/getAllMeals/edit">
+<form method="post" action="${pageContext.request.contextPath}/meals/edit">
     <input type="hidden" name="id" value="${meal.id}">
     <input type="datetime-local" value="${meal.dateTime}" name="dateTime">
     <br>

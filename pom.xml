@@ -39,6 +39,16 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>127.0.0.1</url>
+                    <port>8080</port>
+                    <path>/topjava</path>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

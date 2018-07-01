@@ -7,7 +7,7 @@
 <title>Title</title>
 <body>
 <link href="../css/listMeal.css" rel="stylesheet" type="text/css">
-<form method="post" action="${pageContext.request.contextPath}/meals/edit">
+<form method="post" action="${pageContext.request.contextPath}/meals/getAllMeals">
     <input type="number" name="calories" min="0" value="${calories}"/>
     <table>
         <tr>
