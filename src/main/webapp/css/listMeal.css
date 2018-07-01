@@ -1,0 +1,16 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr.matches{
+    background: #FF6347
+}
+
+tr.notMatches{
+    background: #4CAF50
+}
