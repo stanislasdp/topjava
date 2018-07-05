@@ -7,9 +7,14 @@ public interface Action {
 
     boolean canProcess(HttpServletRequest request);
 
-    boolean doGet(HttpServletRequest request, HttpServletResponse response);
 
-    boolean doPost(HttpServletRequest request, HttpServletResponse response);
+    default boolean doPost(HttpServletRequest request, HttpServletResponse response){
+        return false;
+    }
+
+    default boolean doGet(HttpServletRequest request, HttpServletResponse response) {
+        return false;
+    }
 
     default String getActionString(HttpServletRequest req) {
         String requestURI = req.getRequestURI();

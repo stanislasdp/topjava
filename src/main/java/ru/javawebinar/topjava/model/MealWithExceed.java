@@ -1,14 +1,12 @@
 package ru.javawebinar.topjava.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 public class MealWithExceed {
 
     @Getter
@@ -16,16 +14,16 @@ public class MealWithExceed {
     private Long id;
 
     @Getter
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
     @Getter
-    private final String description;
+    private String description;
 
     @Getter
-    private final int calories;
+    private int calories;
 
     @Getter
-    private final boolean exceed;
+    private boolean exceed;
 
     public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
         this.dateTime = dateTime;

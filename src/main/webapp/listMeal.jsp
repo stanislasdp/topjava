@@ -8,6 +8,7 @@
 <body>
 <link href="../css/listMeal.css" rel="stylesheet" type="text/css">
 <form method="post" action="${pageContext.request.contextPath}/meals/getAllMeals">
+    <a href="${pageContext.request.contextPath}/meals/add">Add meal</a>
     <input type="number" name="calories" min="0" value="${calories}"/>
     <table>
         <tr>
@@ -22,9 +23,11 @@
                 <c:url var="editUrl" value="/meals/edit">
                     <c:param name="mealId" value="${meal.id}"/>
                 </c:url>
-                <td><a href="${editUrl}">${meal.description}</a></td>
+                <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td>${meal.exceed}</td>
+                <td><a href="${pageContext.request.contextPath}/meals/update?id=${meal.id}">Update</a></td>
+                <td><a href="${pageContext.request.contextPath}/meals/delete?id=${meal.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

@@ -14,5 +14,5 @@ public interface MealRepository {
 
     void update(Meal meal);
 
-    void delete(Meal meal);
+    void delete(Long id);
 }

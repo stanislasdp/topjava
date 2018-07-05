@@ -17,7 +17,7 @@ public interface MealService {
 
     void update(MealWithExceed mealWithExceed);
 
-    void delete(MealWithExceed mealWithExceed);
+    void delete(Long id);
 
 
 }

@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 @Component
-public class EditMealAction implements Action {
+public class AddNewMealAction implements Action {
 
-    private static final String URL_PATTERN = "update";
+    private static final String URL_PATTERN ="/add";
 
     @Autowired
     private MealService mealService;
@@ -27,9 +27,7 @@ public class EditMealAction implements Action {
     @Override
     @SneakyThrows
     public boolean doGet(HttpServletRequest request, HttpServletResponse response) {
-        Long id = Long.parseLong(request.getParameter("id"));
-        MealWithExceed meal = mealService.getById(id);
-        request.setAttribute("meal", meal);
+        request.setAttribute("meal", new MealWithExceed());
         request.getRequestDispatcher("/meal.jsp").forward(request, response);
         return true;
     }
@@ -37,14 +35,12 @@ public class EditMealAction implements Action {
     @Override
     @SneakyThrows
     public boolean doPost(HttpServletRequest request, HttpServletResponse response) {
-        Long id = Long.parseLong(request.getParameter("id"));
         LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"));
         String description = request.getParameter("description");
         Integer calories = Integer.parseInt(request.getParameter("calories"));
         MealWithExceed meal = new MealWithExceed(dateTime, description, calories, false);
-        meal.setId(id);
-        mealService.update(meal);
+        mealService.add(meal);
         response.sendRedirect("meals/getAllMeals");
-        return false;
+        return true;
     }
 }

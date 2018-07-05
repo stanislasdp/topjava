@@ -31,7 +31,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public void create(Meal meal) {
-        meals.put(meal.getId(), meal);
+        meals.put(meal.getId() == null ? counter.incrementAndGet() : meal.getId(), meal);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public void delete(Meal meal) {
-        meals.remove(meal.getId());
+    public void delete(Long id) {
+        meals.remove(id);
     }
 }
