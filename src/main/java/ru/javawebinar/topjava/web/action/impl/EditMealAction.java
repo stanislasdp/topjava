@@ -7,7 +7,6 @@ import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.web.action.Action;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -46,10 +45,6 @@ public class EditMealAction implements Action {
         meal.setId(id);
         mealService.update(meal);
         response.sendRedirect(request.getContextPath() + "/meals/getAllMeals");
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/meals/getAllMeals");
-        requestDispatcher.forward(request, response);
-        response.setStatus(200);
-
         return false;
     }
 }
