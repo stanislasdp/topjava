@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.web.action;
+package ru.javawebinar.topjava.web.meal.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

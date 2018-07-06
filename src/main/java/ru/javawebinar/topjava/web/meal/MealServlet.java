@@ -1,10 +1,10 @@
-package ru.javawebinar.topjava.web;
+package ru.javawebinar.topjava.web.meal;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-import ru.javawebinar.topjava.web.action.Action;
+import ru.javawebinar.topjava.web.meal.action.Action;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

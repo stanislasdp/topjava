@@ -1,11 +1,11 @@
-package ru.javawebinar.topjava.web.action.impl;
+package ru.javawebinar.topjava.web.meal.action.impl;
 
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.web.action.Action;
+import ru.javawebinar.topjava.web.meal.action.Action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
