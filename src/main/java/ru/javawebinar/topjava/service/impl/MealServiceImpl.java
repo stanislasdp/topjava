@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.converter.MealWithExceedToMealConverter;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.specification.MealPredicateByDateRange;
 import ru.javawebinar.topjava.service.MealService;
 
 import java.time.LocalDate;
@@ -44,10 +45,10 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<MealWithExceed> getWithinTime(int calories, LocalTime startTime, LocalTime endTime) {
-        return mealRepository.read()
-                .stream()
-                .map(meal -> mealToExceedMealConverter.convert(meal))
-                .collect(Collectors.toList());
+        return mealRepository.query(new MealPredicateByDateRange(startTime, endTime))
+            .stream()
+            .map(meal -> mealToExceedMealConverter.convert(meal))
+            .collect(Collectors.toList());
     }
 
     @Override

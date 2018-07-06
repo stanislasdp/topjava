@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.repository;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface MealRepository {
 
@@ -15,4 +16,6 @@ public interface MealRepository {
     void update(Meal meal);
 
     void delete(Long id);
+
+    List<Meal> query(Predicate<Meal> predicate);
 }

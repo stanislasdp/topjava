@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Component
 public class InMemoryMealRepository implements MealRepository {
@@ -53,4 +55,14 @@ public class InMemoryMealRepository implements MealRepository {
     public void delete(Long id) {
         meals.remove(id);
     }
+
+    @Override
+    public List<Meal> query(Predicate<Meal> predicate) {
+        return meals
+            .values()
+            .stream()
+            .filter(predicate)
+            .collect(Collectors.toList());
+    }
+
 }
