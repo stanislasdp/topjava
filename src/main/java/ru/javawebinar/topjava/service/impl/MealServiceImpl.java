@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.converter.MealToMealWithExceedConverter;
 import ru.javawebinar.topjava.converter.MealWithExceedToMealConverter;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.MealWithExceed;
+import ru.javawebinar.topjava.dto.MealWithExceed;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.specification.MealPredicateByDateRange;
 import ru.javawebinar.topjava.service.MealService;
@@ -52,22 +53,22 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealWithExceed> getAll(int caloriesNorm) {
-        List<Meal> meals = mealRepository.read();
+    public List<MealWithExceed> getAll(User user) {
+        List<Meal> meals = mealRepository.query(meal -> meal.getUserId().equals(user.getId()));
 
         Map<LocalDate, Integer> caloriesSumByDate = meals
-                .stream()
+            .stream()
                 .collect(groupingBy(Meal::getDate, summingInt(Meal::getCalories)));
 
         return meals.stream()
-                .map(meal -> mealToExceedMealConverter.convert(meal, caloriesSumByDate.get(meal.getDate()) > caloriesNorm))
+                .map(meal -> mealToExceedMealConverter.convert(meal, caloriesSumByDate.get(meal.getDate()) > user.getCaloriesPerDay()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public MealWithExceed getById(Long id) {
-        Meal meal = mealRepository.readById(id);
-        return mealToExceedMealConverter.convert(meal);
+    public MealWithExceed getById(User user, Integer id) {
+        Meal UserMeal = mealRepository.queryForSingle(meal -> meal.getUserId().equals(user.getId()) && meal.getId().equals(id));
+        return mealToExceedMealConverter.convert(UserMeal);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         mealRepository.delete(id);
     }
 }

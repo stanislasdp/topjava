@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.service;
 
-import ru.javawebinar.topjava.model.MealWithExceed;
+import ru.javawebinar.topjava.dto.MealWithExceed;
+import ru.javawebinar.topjava.model.User;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -11,13 +12,12 @@ public interface MealService {
 
     List<MealWithExceed> getWithinTime(int caloriesNorm, LocalTime start, LocalTime end);
 
-    List<MealWithExceed> getAll(int caloriesNorm);
+    List<MealWithExceed> getAll(User user);
 
-    MealWithExceed getById(Long id);
+    MealWithExceed getById(User user, Integer id);
 
     void update(MealWithExceed mealWithExceed);
 
-    void delete(Long id);
-
+    void delete(Integer id);
 
 }

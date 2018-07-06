@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.converter;
 
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.MealWithExceed;
+import ru.javawebinar.topjava.dto.MealWithExceed;
 
 @Component
 public class MealWithExceedToMealConverter implements Converter<MealWithExceed, Meal> {

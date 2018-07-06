@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository;
 
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -10,15 +11,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
-public class InMemoryMealRepository implements MealRepository {
+public class InMemoryMealRepositoryImpl implements MealRepository {
 
-    private AtomicLong counter = new AtomicLong();
-    private Map<Long, Meal> meals = new ConcurrentHashMap<>();
+    private AtomicInteger counter = new AtomicInteger();
+    private Map<Integer, Meal> meals = new ConcurrentHashMap<>();
 
     {
         Arrays.asList(
@@ -42,8 +44,8 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public Meal readById(Long id) {
-        return meals.getOrDefault(id, new Meal());
+    public Meal readById(Integer id) {
+        return meals.get(id);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         meals.remove(id);
     }
 
@@ -63,6 +65,16 @@ public class InMemoryMealRepository implements MealRepository {
             .stream()
             .filter(predicate)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public Meal queryForSingle(Predicate<Meal> predicate) {
+        return meals
+            .values()
+            .stream()
+            .filter(predicate)
+            .findFirst()
+            .orElseThrow(() -> new NotFoundException("No meal found"));
     }
 
 }

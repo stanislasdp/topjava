@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.model;
+package ru.javawebinar.topjava.dto;
 
 import lombok.*;
 
@@ -11,7 +11,7 @@ public class MealWithExceed {
 
     @Getter
     @Setter
-    private Long id;
+    private Integer id;
 
     @Getter
     private LocalDateTime dateTime;

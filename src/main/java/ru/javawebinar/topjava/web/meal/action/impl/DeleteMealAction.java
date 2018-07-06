@@ -25,7 +25,7 @@ public class DeleteMealAction implements Action {
     @Override
     @SneakyThrows
     public boolean doGet(HttpServletRequest request, HttpServletResponse response) {
-        mealService.delete(Long.parseLong(request.getParameter("id")));
+        mealService.delete(Integer.parseInt(request.getParameter("id")));
         response.sendRedirect("meals/getAllMeals");
         return false;
     }
