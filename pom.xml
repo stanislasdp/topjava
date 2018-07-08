@@ -24,6 +24,8 @@
         <org.lombok.version>1.18.0</org.lombok.version>
         <org.springframework.version>5.0.7.RELEASE</org.springframework.version>
         <com.google.guava.version>25.1-jre</com.google.guava.version>
+        <org.apache.commons.version>3.7</org.apache.commons.version>
+
     </properties>
 
     <build>
@@ -111,6 +113,16 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>25.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${org.apache.commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.10</version>
         </dependency>
     </dependencies>
 </project>

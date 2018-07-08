@@ -11,13 +11,6 @@
         <param-value>WEB-INF/application-context.xml</param-value>
     </context-param>
 
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
-
-
     <filter>
         <filter-name>PerformanceFilter</filter-name>
         <filter-class>ru.javawebinar.topjava.filters.PerformanceFilter</filter-class>
@@ -61,6 +54,9 @@
 
     <listener>
         <listener-class>ru.javawebinar.topjava.listeners.MyHttpSessionActivationListener</listener-class>
+    </listener>
+    <listener><listener-class>
+            org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
     <welcome-file-list>

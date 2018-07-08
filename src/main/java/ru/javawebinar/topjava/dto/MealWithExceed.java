@@ -1,17 +1,16 @@
 package ru.javawebinar.topjava.dto;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import ru.javawebinar.topjava.model.AbstractBaseEntity;
 
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode
 @ToString
-@NoArgsConstructor
-public class MealWithExceed {
+public class MealWithExceed extends AbstractBaseEntity {
 
-    @Getter
-    @Setter
-    private Integer id;
 
     @Getter
     private LocalDateTime dateTime;
@@ -25,7 +24,20 @@ public class MealWithExceed {
     @Getter
     private boolean exceed;
 
+    public MealWithExceed() {
+        super(null);
+    }
+
+    public MealWithExceed(Integer id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
+        super(id);
+        this.dateTime = dateTime;
+        this.description = description;
+        this.calories = calories;
+        this.exceed = exceed;
+    }
+
     public MealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
+        super(null);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;

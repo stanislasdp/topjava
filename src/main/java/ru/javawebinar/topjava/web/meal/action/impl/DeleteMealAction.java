@@ -1,19 +1,19 @@
 package ru.javawebinar.topjava.web.meal.action.impl;
 
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.meal.action.Action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Component
 public class DeleteMealAction implements Action {
 
-    @Autowired
-    private MealService mealService;
+    private MealRestController controller;
+
+    public DeleteMealAction(MealRestController controller) {
+        this.controller = controller;
+    }
 
     private static final String URL_PATTERN = "/delete";
 
@@ -25,7 +25,7 @@ public class DeleteMealAction implements Action {
     @Override
     @SneakyThrows
     public boolean doGet(HttpServletRequest request, HttpServletResponse response) {
-        mealService.delete(Integer.parseInt(request.getParameter("id")));
+        controller.delete(Integer.parseInt(request.getParameter("id")));
         response.sendRedirect("meals/getAllMeals");
         return false;
     }

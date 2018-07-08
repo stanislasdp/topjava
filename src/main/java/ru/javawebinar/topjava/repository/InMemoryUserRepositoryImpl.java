@@ -1,25 +1,25 @@
 package ru.javawebinar.topjava.repository;
 
+import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.AbstractBaseEntity;
 import ru.javawebinar.topjava.model.AbstractNamedEntity;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-import java.util.ArrayList;
-
-import java.util.Comparator;
-import java.util.List;
-
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
 
+@Component
 public class InMemoryUserRepositoryImpl implements UserRepository {
 
-    private Set<User> users = new TreeSet<>(comparing(AbstractNamedEntity::getName).thenComparing(AbstractBaseEntity::getId));
+    private Set<User> users;
+
+    public InMemoryUserRepositoryImpl() {
+        users = new TreeSet<>(comparing(AbstractNamedEntity::getName)
+                .thenComparing(AbstractBaseEntity::getId));
+    }
 
     @Override
     public User save(User user) {

@@ -7,9 +7,11 @@
 <title>Title</title>
 <body>
 <link href="../css/listMeal.css" rel="stylesheet" type="text/css">
-<form method="post" action="${pageContext.request.contextPath}/meals/getAllMeals">
+<form method="get" action="${pageContext.request.contextPath}/meals/getAllMeals">
+    <input type="date" name="startDate" value="${startDate}" placeholder="Start date">
+    <br>
+    <input type="date" name="endDate" value="${endDate}" placeholder="End date">
     <a href="${pageContext.request.contextPath}/meals/add">Add meal</a>
-    <input type="number" name="calories" min="0" value="${calories}"/>
     <table>
         <tr>
             <th>Date/Time</th>

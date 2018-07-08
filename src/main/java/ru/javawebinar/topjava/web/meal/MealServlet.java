@@ -2,9 +2,11 @@ package ru.javawebinar.topjava.web.meal;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ru.javawebinar.topjava.web.meal.action.Action;
+import ru.javawebinar.topjava.web.meal.action.ActionsResolver;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,16 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@Component
 public class MealServlet extends HttpServlet {
 
     @Autowired
+    private MealRestController controller;
+
     private List<Action> actions;
+
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
+        final AutowireCapableBeanFactory beanFactory = springContext.getAutowireCapableBeanFactory();
+        beanFactory.autowireBean(this);
+        actions = new ActionsResolver(controller).getActions();
     }
 
     @Override

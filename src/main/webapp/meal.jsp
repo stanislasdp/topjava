@@ -7,7 +7,7 @@
 <title>Title</title>
 <body>
 <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
-<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealWithExceed" scope="request"/>
+<jsp:useBean id="meal" type="ru.javawebinar.topjava.dto.MealWithExceed" scope="request"/>
 <form method="post" action="${meal.id == null ? "meals/add" : "meals/edit"}">
     <input type="hidden" name="id" value="${meal.id}">
     <input type="datetime-local" value="${meal.dateTime}" name="dateTime" required>
