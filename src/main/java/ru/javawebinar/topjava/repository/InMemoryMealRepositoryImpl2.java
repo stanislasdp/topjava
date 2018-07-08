@@ -50,26 +50,25 @@ public class InMemoryMealRepositoryImpl2 implements MealRepository {
     @Override
     public List<Meal> query(Predicate<Meal> predicate) {
         return meals
-            .values()
-            .stream()
-            .filter(predicate)
-            .collect(Collectors.toList());
+                .values()
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Meal queryForSingle(Predicate<Meal> predicate) {
         return meals
-            .values()
-            .stream()
-            .filter(predicate)
-            .findFirst()
-            .orElse(null);
+                .values()
+                .stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
     }
 
 
     @PostConstruct
-    private void init() {
-        {
+    private void init() { {
             Arrays.asList(
                     new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Breakfast", 500),
                     new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Lunch", 1000),

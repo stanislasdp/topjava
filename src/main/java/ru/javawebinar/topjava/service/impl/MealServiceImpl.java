@@ -7,8 +7,8 @@ import ru.javawebinar.topjava.converter.MealWithExceedToMealConverter;
 import ru.javawebinar.topjava.dto.MealWithExceed;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.specification.PredicateByDateRange;
-import ru.javawebinar.topjava.repository.specification.PredicateByTimeRange;
+import ru.javawebinar.topjava.repository.specification.MealPredicateByDateRange;
+import ru.javawebinar.topjava.repository.specification.MealPredicateByTimeRange;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.SecurityUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -52,8 +52,8 @@ public class MealServiceImpl implements MealService {
     @Override
     public List<MealWithExceed> getWithinTime(LocalDate startDate, LocalTime startTime,
                                               LocalDate endDate, LocalTime endTime, int userId) {
-        List<Meal> meals = mealRepository.query(new PredicateByDateRange<Meal>(startDate, endDate)
-                .and(new PredicateByTimeRange<>(startTime, endTime)));
+        List<Meal> meals = mealRepository.query(new MealPredicateByDateRange<Meal>(startDate, endDate)
+                .and(new MealPredicateByTimeRange<>(startTime, endTime)));
 
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(groupingBy(Meal::getDate, summingInt(Meal::getCalories)));

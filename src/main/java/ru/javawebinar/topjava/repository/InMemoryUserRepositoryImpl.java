@@ -1,17 +1,19 @@
 package ru.javawebinar.topjava.repository;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.AbstractBaseEntity;
 import ru.javawebinar.topjava.model.AbstractNamedEntity;
+import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
 
-@Component
+@Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
 
     private Set<User> users;
@@ -50,5 +52,13 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         return getAll().stream().filter(predicate)
             .findFirst()
             .orElseThrow(RuntimeException::new);
+    }
+
+    @PostConstruct
+    private void init() {
+        Arrays.asList(
+                new User(1, "admin", "admin@email.com", "password", Role.ROLE_ADMIN),
+                new User(2, "notadmin", "notAdmin@email.com", "password", Role.ROLE_USER)
+        ).forEach(this::save);
     }
 }
