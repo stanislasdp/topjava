@@ -16,7 +16,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
-public class InMemoryMealRepositoryImpl2 implements MealRepository {
+public class InMemoryMealRepositoryImpl implements MealRepository {
 
     private AtomicInteger counter = new AtomicInteger();
     private Map<Integer, Meal> meals = new ConcurrentHashMap<>();
