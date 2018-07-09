@@ -59,6 +59,4 @@ public class MealRestController {
         log.info("delete with id {}", id);
         service.delete(id, authUserId());
     }
-
-
 }

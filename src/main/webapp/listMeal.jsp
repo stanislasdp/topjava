@@ -8,9 +8,19 @@
 <body>
 <link href="../css/listMeal.css" rel="stylesheet" type="text/css">
 <form method="get" action="${pageContext.request.contextPath}/meals/getAllMeals">
-    <input type="date" name="startDate" value="${startDate}" placeholder="Start date">
+    <input type="date" name="startDate" value="${startDate}" id="startDate">
+    <label for="startDate">Start date</label>
     <br>
-    <input type="date" name="endDate" value="${endDate}" placeholder="End date">
+    <input type="date" name="endDate" value="${endDate}" id="endDate">
+    <label for="endDate">End Date</label>
+    <br>
+    <input type="time" name="startTime" value="${startTime}" id="startTime">
+    <label for="startTime">Start time</label>
+    <br>
+    <input type="time" name="endTime" value="${endTime}" id="endTime">
+    <label for="startTime">End time</label>
+    <br>
+
     <a href="${pageContext.request.contextPath}/meals/add">Add meal</a>
     <table>
         <tr>

@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava.web.user;
 
 import org.slf4j.Logger;
+import ru.javawebinar.topjava.util.SecurityUtil;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,11 +13,11 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class UserServlet extends HttpServlet {
     private static final Logger log = getLogger(UserServlet.class);
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("redirect to users");
 
-//        request.getRequestDispatcher("/users.jsp").forward(request, response);
-        response.sendRedirect("users.jsp");
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.debug("redirect to users");
+        SecurityUtil.setAuthUserId(Integer.parseInt(request.getParameter("userSelect")));
+        response.sendRedirect("/meals/getAllMeals");
     }
 }

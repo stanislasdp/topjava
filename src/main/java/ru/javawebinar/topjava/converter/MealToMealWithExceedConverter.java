@@ -15,9 +15,7 @@ public class MealToMealWithExceedConverter implements Converter<Meal, MealWithEx
     }
 
     public MealWithExceed convert(Meal source, boolean isExceeded) {
-        MealWithExceed mealWithExceed = new MealWithExceed(source.getId(),
+        return new MealWithExceed(source.getId(),
                 source.getDateTime(), source.getDescription(), source.getCalories(), isExceeded);
-        mealWithExceed.setId(source.getId());
-        return mealWithExceed;
     }
 }
