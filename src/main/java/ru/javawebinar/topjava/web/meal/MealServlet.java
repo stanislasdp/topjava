@@ -22,7 +22,6 @@ public class MealServlet extends HttpServlet {
 
     private List<Action> actions;
 
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);

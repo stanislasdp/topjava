@@ -8,14 +8,13 @@
 <body>
 <h3>Project <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h3>
 <hr>
-<select name="userSelect">
-    <option value="Home"><a href="home.php">Home</a></option>
-    <option value="Contact"><a href="contact.php">Contact</a></option>
-    <option value="Sitemap"><a href="sitemap.php">Sitemap</a></option>
-</select>
-<ul>
-    <li><a href="users">Users</a></li>
-    <li><a href = "<c:url value = "/meals/getAllMeals"/>">Meals</a></li>
-</ul>
+<form method="get" action="${pageContext.request.contextPath}/users/">
+    <label for="userSelect"></label>
+    <select name="userSelect" id="userSelect">
+        <option value="1">Admin</option>
+        <option value="2">Not admin</option>
+    </select>
+    <button type="submit">Meals</button>
+</form>
 </body>
 </html>

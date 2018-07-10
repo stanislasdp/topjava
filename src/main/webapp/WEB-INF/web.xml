@@ -39,7 +39,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <url-pattern>/users/*</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>mealServlet</servlet-name>

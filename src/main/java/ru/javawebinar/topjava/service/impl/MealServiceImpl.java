@@ -52,8 +52,9 @@ public class MealServiceImpl implements MealService {
     @Override
     public List<MealWithExceed> getWithinTime(LocalDate startDate, LocalTime startTime,
                                               LocalDate endDate, LocalTime endTime, int userId) {
-        List<Meal> meals = mealRepository.query(new MealPredicateByDateRange<Meal>(startDate, endDate)
-                .and(new MealPredicateByTimeRange<>(startTime, endTime)));
+        List<Meal> meals = mealRepository.query(new MealPredicateByDateRange<>(startDate, endDate)
+                .and(new MealPredicateByTimeRange<>(startTime, endTime)
+                        .and(meal -> Objects.equals(meal.getUserId(), userId))));
 
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(groupingBy(Meal::getDate, summingInt(Meal::getCalories)));
@@ -68,10 +69,14 @@ public class MealServiceImpl implements MealService {
     @Override
     public MealWithExceed getById(Integer id, int userId) {
         Meal userMeal = mealRepository.queryForSingle(meal -> meal.getId().equals(id));
+
+        if (userMeal == null) {
+            throw new NotFoundException(String.format("meal with id %s", id));
+        }
+
         if (!userMeal.getUserId().equals(userId)) {
             throw new NotFoundException("meal does not belong to current user");
         }
-        Objects.requireNonNull(userMeal);
         return mealToExceedMealConverter.convert(userMeal);
     }
 
@@ -84,9 +89,11 @@ public class MealServiceImpl implements MealService {
         }
 
         if (!meal.getUserId().equals(userId)) {
-            throw new NotFoundException("Meal does not exist");
+            throw new NotFoundException("Meal does not belong to current user");
         }
-        mealRepository.update(meal);
+        Meal newMeal = mealWithExceedToMealConverter.convert(mealWithExceed);
+        newMeal.setUserId(userId);
+        mealRepository.update(newMeal);
     }
 
     @Override
@@ -98,7 +105,7 @@ public class MealServiceImpl implements MealService {
         }
 
         if (!meal.getUserId().equals(userId)) {
-            throw new NotFoundException("meal doesnot belong to the user");
+            throw new NotFoundException("meal does not belong to the user");
         }
         mealRepository.delete(id);
     }
