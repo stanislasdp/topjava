@@ -26,23 +26,16 @@ public class MealRestController {
         this.service = mealService;
     }
 
-    public List<MealWithExceed> getAll() {
+    public List<MealWithExceed> get(LocalDate startDate, LocalDate endDate,
+                                    LocalTime startTime, LocalTime endTime) {
         log.info("getAll");
-        return service.getWithinTime(LocalDate.MIN, LocalTime.MIN,
-                LocalDate.MAX, LocalTime.MAX,
-                authUserId());
+        return service.getWithinTime(startDate, startTime,
+                endDate, endTime, authUserId());
     }
 
     public MealWithExceed getById(int id) {
         log.info("get {}", id);
         return service.getById(id, authUserId());
-    }
-
-    public List<MealWithExceed> getWithinDatesTimes(LocalDate startDate, LocalDate endDate,
-                                                    LocalTime startTime, LocalTime endTime) {
-        log.info("get within start date:{}, start time:{}, end date:{}, end time: {}",
-                startDate, endDate, startTime, endTime);
-        return service.getWithinTime(startDate, startTime, endDate, endTime, authUserId());
     }
 
     public void add(MealWithExceed mealWithExceed) {

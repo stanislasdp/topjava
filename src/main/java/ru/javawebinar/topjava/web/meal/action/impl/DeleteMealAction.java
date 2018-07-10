@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.meal.action.impl;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.meal.action.Action;
 
@@ -11,6 +12,7 @@ public class DeleteMealAction implements Action {
 
     private MealRestController controller;
 
+    @Autowired
     public DeleteMealAction(MealRestController controller) {
         this.controller = controller;
     }
@@ -24,9 +26,8 @@ public class DeleteMealAction implements Action {
 
     @Override
     @SneakyThrows
-    public boolean doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         controller.delete(Integer.parseInt(request.getParameter("id")));
         response.sendRedirect("meals/getAllMeals");
-        return false;
     }
 }

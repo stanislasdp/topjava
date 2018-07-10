@@ -8,12 +8,11 @@ public interface Action {
     boolean canProcess(HttpServletRequest request);
 
 
-    default boolean doPost(HttpServletRequest request, HttpServletResponse response){
-        return false;
+    default void doPost(HttpServletRequest request, HttpServletResponse response){
     }
 
-    default boolean doGet(HttpServletRequest request, HttpServletResponse response) {
-        return false;
+    default void doGet(HttpServletRequest request, HttpServletResponse response) {
+
     }
 
     default String getActionString(HttpServletRequest req) {
