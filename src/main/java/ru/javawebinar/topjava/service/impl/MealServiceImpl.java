@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -69,10 +70,7 @@ public class MealServiceImpl implements MealService {
     @Override
     public MealWithExceed getById(Integer id, int userId) {
         Meal userMeal = mealRepository.queryForSingle(meal -> meal.getId().equals(id));
-
-        if (userMeal == null) {
-            throw new NotFoundException(String.format("meal with id %s", id));
-        }
+        checkNotFound(userMeal, String.format("meal with id %s", id));
 
         if (!userMeal.getUserId().equals(userId)) {
             throw new NotFoundException("meal does not belong to current user");
@@ -83,10 +81,7 @@ public class MealServiceImpl implements MealService {
     @Override
     public void update(MealWithExceed mealWithExceed, int userId) {
         Meal meal = mealRepository.readById(mealWithExceedToMealConverter.convert(mealWithExceed).getId());
-
-        if (Objects.isNull(meal) || Objects.isNull(meal.getId())) {
-            throw new NotFoundException("Meal does not exist");
-        }
+        checkNotFound(meal, "meal not found");
 
         if (!meal.getUserId().equals(userId)) {
             throw new NotFoundException("Meal does not belong to current user");
@@ -99,10 +94,7 @@ public class MealServiceImpl implements MealService {
     @Override
     public void delete(Integer id, int userId) {
         Meal meal = mealRepository.readById(id);
-
-        if (Objects.isNull(meal) || Objects.isNull(meal.getId())) {
-            throw new NotFoundException("Meal does not exist");
-        }
+        checkNotFound(meal, "Meal does exists");
 
         if (!meal.getUserId().equals(userId)) {
             throw new NotFoundException("meal does not belong to the user");
