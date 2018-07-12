@@ -13,7 +13,7 @@ public class DateTimeUtil {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss a",
             Locale.US);
 
-    public static <T extends Comparable<T>> boolean isBetween(T lt, T start, T end) {
+    public static <T extends Comparable<? super T>> boolean isBetween(T lt, T start, T end) {
         return lt.compareTo(start) >= 0 && lt.compareTo(end) <= 0;
     }
 
@@ -28,4 +28,13 @@ public class DateTimeUtil {
     public static LocalTime getLocalTimeIfPresent(String localTime) {
         return StringUtils.isNotBlank(localTime) ? LocalTime.parse(localTime) : null;
     }
+
+    public static LocalDateTime getLocalDateTimeMinWhenEmpty(LocalDate date, LocalTime time) {
+        return LocalDateTime.of(date == null ? LocalDate.MIN : date, time == null ? LocalTime.MIN : time);
+    }
+
+    public static LocalDateTime getLocalDateTimeMaxWhenEmpty(LocalDate date, LocalTime time) {
+        return LocalDateTime.of(date == null ? LocalDate.MAX : date, time == null ? LocalTime.MAX : time);
+    }
+
 }

@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMaxWhenEmpty;
+import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMinWhenEmpty;
+import static ru.javawebinar.topjava.util.SecurityUtil.authUserCaloriesPerDay;
 import static ru.javawebinar.topjava.util.SecurityUtil.authUserId;
 
 @Controller
@@ -29,8 +32,10 @@ public class MealRestController {
     public List<MealWithExceed> get(LocalDate startDate, LocalDate endDate,
                                     LocalTime startTime, LocalTime endTime) {
         log.info("getAll");
-        return service.getWithinTime(startDate, startTime,
-                endDate, endTime, authUserId());
+        return service.getWithinTime(
+                getLocalDateTimeMinWhenEmpty(startDate, startTime),
+                getLocalDateTimeMaxWhenEmpty(endDate, endTime),
+                authUserId(), authUserCaloriesPerDay());
     }
 
     public MealWithExceed getById(int id) {
