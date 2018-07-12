@@ -1,6 +1,10 @@
 package ru.javawebinar.topjava.util;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -15,5 +19,13 @@ public class DateTimeUtil {
 
     public static String formatLocalDateTime(LocalDateTime localDateTime) {
         return localDateTime.format(DATE_TIME_FORMATTER);
+    }
+
+    public static LocalDate getLocalDateIfPresent(String localDate) {
+        return StringUtils.isNotBlank(localDate) ? LocalDate.parse(localDate) : null;
+    }
+
+    public static LocalTime getLocalTimeIfPresent(String localTime) {
+        return StringUtils.isNotBlank(localTime) ? LocalTime.parse(localTime) : null;
     }
 }

@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.web.meal.action.impl;
 
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.dto.MealWithExceed;
 import ru.javawebinar.topjava.web.meal.MealRestController;
@@ -13,6 +12,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+
+import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateIfPresent;
+import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalTimeIfPresent;
+
 
 public class GetAllMealsAction implements Action {
     private static final String URL_PATTERN = "/getAllMeals";
@@ -58,13 +61,7 @@ public class GetAllMealsAction implements Action {
         request.getRequestDispatcher("/listMeal.jsp").forward(request, response);
     }
 
-    private LocalDate getLocalDateIfPresent(String localDate) {
-        return StringUtils.isNotBlank(localDate) ? LocalDate.parse(localDate) : null;
-    }
 
-    private LocalTime getLocalTimeIfPresent(String localTime) {
-        return StringUtils.isNotBlank(localTime) ? LocalTime.parse(localTime) : null;
-    }
 
 
 }

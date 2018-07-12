@@ -58,7 +58,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(Integer id, int userId) {
-        return meals.getOrDefault(id, emptyMap()).remove(id) != null;
+        return meals.getOrDefault(userId, emptyMap()).remove(id) != null;
     }
 
     @Override
@@ -83,12 +83,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @PostConstruct
     private void init() { {
             Stream.of(
-                new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Breakfast", 500),
-                new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Lunch", 1000),
-                new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Dinner", 500),
-                new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Breakfast", 1000),
-                new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Lunch", 500),
-                new Meal(counter.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Dinner", 510))
+                new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Breakfast", 500),
+                new Meal(null , LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Lunch", 1000),
+                new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Dinner", 500),
+                new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Breakfast", 1000),
+                new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Lunch", 500),
+                new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Dinner", 510))
                 .forEach(meal -> create(meal, ADMIN_USER_ID));
         }
     }
