@@ -46,59 +46,40 @@ public class MealServiceImpl implements MealService {
     @Override
     public void add(MealWithExceed mealWithExceed, int userId) {
         Meal meal = mealWithExceedToMealConverter.convert(mealWithExceed);
-        meal.setUserId(userId);
-        mealRepository.create(meal);
+        mealRepository.create(meal, userId);
     }
 
     @Override
     public List<MealWithExceed> getWithinTime(LocalDate startDate, LocalTime startTime,
                                               LocalDate endDate, LocalTime endTime, int userId) {
-        List<Meal> meals = mealRepository.query(new MealPredicateByDateRange<>(startDate, endDate)
-                .and(new MealPredicateByTimeRange<>(startTime, endTime)
-                        .and(meal -> Objects.equals(meal.getUserId(), userId))));
+        List<Meal> meals = mealRepository.query(
+            new MealPredicateByDateRange<>(startDate, endDate)
+                .and(new MealPredicateByTimeRange<>(startTime, endTime)), userId);
 
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
-                .collect(groupingBy(Meal::getDate, summingInt(Meal::getCalories)));
+            .collect(groupingBy(Meal::getDate, summingInt(Meal::getCalories)));
 
         return meals.stream()
-                .map(meal -> mealToExceedMealConverter.convert(meal, caloriesSumByDate
-                        .get(meal.getDate()) > SecurityUtil.authUserCaloriesPerDay()))
-                .sorted(comparing(MealWithExceed::getDateTime).reversed())
-                .collect(Collectors.toList());
+            .map(meal -> mealToExceedMealConverter.convert(meal, caloriesSumByDate
+                .get(meal.getDate()) > SecurityUtil.authUserCaloriesPerDay()))
+            .sorted(comparing(MealWithExceed::getDateTime).reversed())
+            .collect(Collectors.toList());
     }
 
     @Override
     public MealWithExceed getById(Integer id, int userId) {
-        Meal userMeal = mealRepository.queryForSingle(meal -> meal.getId().equals(id));
+        Meal userMeal = mealRepository.readById(id, userId);
         checkNotFound(userMeal, String.format("meal with id %s", id));
-
-        if (!userMeal.getUserId().equals(userId)) {
-            throw new NotFoundException("meal does not belong to current user");
-        }
         return mealToExceedMealConverter.convert(userMeal);
     }
 
     @Override
     public void update(MealWithExceed mealWithExceed, int userId) {
-        Meal meal = mealRepository.readById(mealWithExceedToMealConverter.convert(mealWithExceed).getId());
-        checkNotFound(meal, "meal not found");
-
-        if (!meal.getUserId().equals(userId)) {
-            throw new NotFoundException("Meal does not belong to current user");
-        }
-        Meal newMeal = mealWithExceedToMealConverter.convert(mealWithExceed);
-        newMeal.setUserId(userId);
-        mealRepository.update(newMeal);
+        mealRepository.update(mealWithExceedToMealConverter.convert(mealWithExceed), userId);
     }
 
     @Override
     public void delete(Integer id, int userId) {
-        Meal meal = mealRepository.readById(id);
-        checkNotFound(meal, "Meal does exists");
-
-        if (!meal.getUserId().equals(userId)) {
-            throw new NotFoundException("meal does not belong to the user");
-        }
-        mealRepository.delete(id);
+        mealRepository.delete(id, userId);
     }
 }

@@ -7,17 +7,17 @@ import java.util.function.Predicate;
 
 public interface MealRepository {
 
-    void create(Meal meal);
+    Meal create(Meal meal, int userId);
 
-    List<Meal> read();
+    List<Meal> read(int userId);
 
-    Meal readById(Integer id);
+    Meal readById(int id, int userId);
 
-    void update(Meal meal);
+    Meal update(Meal meal, int userId);
 
-    void delete(Integer id);
+    boolean delete(Integer id, int userId);
 
-    List<Meal> query(Predicate<Meal> predicate);
+    List<Meal> query(Predicate<Meal> predicate, int userId);
 
-    Meal queryForSingle(Predicate<Meal> predicate);
+    Meal queryForSingle(Predicate<Meal> predicate, int userId);
 }
