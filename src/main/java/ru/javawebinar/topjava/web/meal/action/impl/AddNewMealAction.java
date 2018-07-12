@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.meal.action.impl;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.dto.MealWithExceed;
 import ru.javawebinar.topjava.web.meal.MealRestController;
@@ -17,6 +18,7 @@ public class AddNewMealAction implements Action {
 
     private MealRestController controller;
 
+    @Autowired
     public AddNewMealAction(MealRestController controller) {
         this.controller = controller;
     }
@@ -28,21 +30,20 @@ public class AddNewMealAction implements Action {
 
     @Override
     @SneakyThrows
-    public boolean doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("meal", new MealWithExceed());
         request.getRequestDispatcher("/meal.jsp").forward(request, response);
-        return true;
     }
 
     @Override
     @SneakyThrows
-    public boolean doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"));
         String description = request.getParameter("description");
         Integer calories = Integer.parseInt(request.getParameter("calories"));
         MealWithExceed meal = new MealWithExceed(dateTime, description, calories, false);
         controller.add(meal);
         response.sendRedirect("meals/getAllMeals");
-        return true;
+
     }
 }

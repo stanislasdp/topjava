@@ -6,7 +6,7 @@
 </head>
 <title>Title</title>
 <body>
-<link href="../css/listMeal.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/css/listMeal.css" rel="stylesheet" type="text/css">
 <form method="get" action="${pageContext.request.contextPath}/meals/getAllMeals">
     <input type="date" name="startDate" value="${startDate}" id="startDate">
     <label for="startDate">Start date</label>
