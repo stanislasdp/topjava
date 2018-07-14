@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.javawebinar.topjava.converter.MealDtoToMealWithExceedConverter;
+import ru.javawebinar.topjava.dto.MealDto;
 import ru.javawebinar.topjava.dto.MealWithExceed;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.util.SecurityUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 
 import java.time.LocalDate;
@@ -14,7 +17,6 @@ import java.util.List;
 
 import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMaxWhenEmpty;
 import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMinWhenEmpty;
-import static ru.javawebinar.topjava.util.SecurityUtil.authUserCaloriesPerDay;
 import static ru.javawebinar.topjava.util.SecurityUtil.authUserId;
 
 @Controller
@@ -24,30 +26,34 @@ public class MealRestController {
 
     private MealService service;
 
+    private MealDtoToMealWithExceedConverter mealDtoToMealWithExceedConverter;
+
     @Autowired
-    public MealRestController(MealService mealService) {
+    public MealRestController(MealService mealService, MealDtoToMealWithExceedConverter converter) {
         this.service = mealService;
+        this.mealDtoToMealWithExceedConverter = converter;
     }
 
-    public List<MealWithExceed> get(LocalDate startDate, LocalDate endDate,
-                                    LocalTime startTime, LocalTime endTime) {
+    public List<MealWithExceed> getExceeded(LocalDate startDate, LocalDate endDate,
+                                            LocalTime startTime, LocalTime endTime) {
         log.info("getAll");
-        return service.getWithinTime(
+        List<MealDto> meals = service.getWithinTime(
                 getLocalDateTimeMinWhenEmpty(startDate, startTime),
                 getLocalDateTimeMaxWhenEmpty(endDate, endTime),
-                authUserId(), authUserCaloriesPerDay());
+                authUserId());
+        return mealDtoToMealWithExceedConverter.convert(meals, SecurityUtil.authUserCaloriesPerDay());
     }
 
-    public MealWithExceed getById(int id) {
-        log.info("get {}", id);
+    public MealDto getById(int id) {
+        log.info("getExceeded {}", id);
         return service.getById(id, authUserId());
     }
 
-    public void add(MealWithExceed mealWithExceed) {
-        service.add(mealWithExceed, authUserId());
+    public void add(MealDto meal) {
+        service.add(meal, authUserId());
     }
 
-    public void update(int id, MealWithExceed meal) {
+    public void update(int id, MealDto meal) {
         log.info("update {} with id {}", meal, id);
         ValidationUtil.assureIdConsistent(meal, id);
         service.update(meal, authUserId());

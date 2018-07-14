@@ -20,7 +20,7 @@ public class AbstractUserController {
     }
 
     public User get(int id) {
-        log.info("get {}", id);
+        log.info("getExceeded {}", id);
         return service.get(id);
     }
 

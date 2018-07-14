@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.web.meal.action.impl;
 
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.javawebinar.topjava.dto.MealWithExceed;
+import ru.javawebinar.topjava.dto.MealDto;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.meal.action.Action;
 
@@ -31,7 +31,7 @@ public class EditMealAction implements Action {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         Integer id = Integer.parseInt(request.getParameter("id"));
-        MealWithExceed meal = controller.getById(id);
+        MealDto meal = controller.getById(id);
         request.setAttribute("meal", meal);
         request.getRequestDispatcher("/meal.jsp").forward(request, response);
     }
@@ -43,7 +43,7 @@ public class EditMealAction implements Action {
         LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"));
         String description = request.getParameter("description");
         Integer calories = Integer.parseInt(request.getParameter("calories"));
-        MealWithExceed meal = new MealWithExceed(mealId, dateTime, description, calories, false);
+        MealDto meal = new MealDto(null, dateTime, description, calories);
         meal.setId(mealId);
         controller.update(mealId, meal);
         response.sendRedirect("meals/getAllMeals");

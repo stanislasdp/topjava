@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 
 import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateIfPresent;
 import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalTimeIfPresent;
@@ -41,27 +40,8 @@ public class GetAllMealsAction implements Action {
         LocalTime startTime = getLocalTimeIfPresent(request.getParameter("startTime"));
         LocalTime endTime = getLocalTimeIfPresent(request.getParameter("endTime"));
 
-        List<MealWithExceed> meals = controller.get(startDate, endDate, startTime, endTime);
+        List<MealWithExceed> meals = controller.getExceeded(startDate, endDate, startTime, endTime);
         request.setAttribute("meals", meals);
-
-        if (Objects.nonNull(startDate)) {
-            request.setAttribute("startDate", startDate.toString());
-        }
-        if (Objects.nonNull(endDate)) {
-            request.setAttribute("endDate", endDate.toString());
-        }
-
-        if (Objects.nonNull(startTime)) {
-            request.setAttribute("startTime", startTime.toString());
-        }
-
-        if (Objects.nonNull(endTime)) {
-            request.setAttribute("endTime", endTime.toString());
-        }
         request.getRequestDispatcher("/listMeal.jsp").forward(request, response);
     }
-
-
-
-
 }

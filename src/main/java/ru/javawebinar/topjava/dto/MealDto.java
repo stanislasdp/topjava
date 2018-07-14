@@ -1,17 +1,20 @@
-package ru.javawebinar.topjava.model;
+package ru.javawebinar.topjava.dto;
+
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import ru.javawebinar.topjava.model.AbstractBaseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@EqualsAndHashCode
-@ToString
-public class Meal extends AbstractBaseEntity {
+@ToString(exclude = "id")
+@EqualsAndHashCode(exclude = "id")
+public class MealDto extends AbstractBaseEntity {
+
 
     @Getter
     @Setter
@@ -25,15 +28,10 @@ public class Meal extends AbstractBaseEntity {
     @Setter
     private int calories;
 
-    public Meal(Integer id) {
-        super(id);
+    public MealDto() {
     }
 
-    public Meal() {
-        super();
-    }
-
-    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
+    public MealDto(Integer id, LocalDateTime dateTime, String description, int calories) {
         super(id);
         this.dateTime = dateTime;
         this.description = description;
