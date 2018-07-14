@@ -28,6 +28,9 @@ public class MealRestController {
 
     private MealDtoToMealWithExceedConverter mealDtoToMealWithExceedConverter;
 
+    public MealRestController() {
+    }
+
     @Autowired
     public MealRestController(MealService mealService, MealDtoToMealWithExceedConverter converter) {
         this.service = mealService;

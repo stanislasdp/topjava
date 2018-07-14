@@ -2,8 +2,6 @@ package ru.javawebinar.topjava.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.javawebinar.topjava.converter.MealDtoToMealWithExceedConverter;
-import ru.javawebinar.topjava.converter.MealWithExceedToMealConverter;
 import ru.javawebinar.topjava.dto.MealDto;
 import ru.javawebinar.topjava.mapper.MealToMealDtoMapper;
 import ru.javawebinar.topjava.model.Meal;
@@ -24,17 +22,9 @@ public class MealServiceImpl implements MealService {
 
     private MealToMealDtoMapper mapper;
 
-    private MealDtoToMealWithExceedConverter mealToExceedMealConverter;
-
-    private MealWithExceedToMealConverter mealWithExceedToMealConverter;
-
     @Autowired
-    public MealServiceImpl(MealRepository mealRepository,
-                           MealDtoToMealWithExceedConverter mealToExceedMealConverter,
-                           MealWithExceedToMealConverter mealWithExceedToMealConverter, MealToMealDtoMapper mapper) {
+    public MealServiceImpl(MealRepository mealRepository,MealToMealDtoMapper mapper) {
         this.mealRepository = mealRepository;
-        this.mealToExceedMealConverter = mealToExceedMealConverter;
-        this.mealWithExceedToMealConverter = mealWithExceedToMealConverter;
         this.mapper = mapper;
     }
 
