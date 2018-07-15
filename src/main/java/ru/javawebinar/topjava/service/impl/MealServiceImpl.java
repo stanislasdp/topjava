@@ -20,12 +20,12 @@ public class MealServiceImpl implements MealService {
 
     private MealRepository mealRepository;
 
+    @Autowired
     private MealToMealDtoMapper mapper;
 
     @Autowired
-    public MealServiceImpl(MealRepository mealRepository,MealToMealDtoMapper mapper) {
+    public MealServiceImpl(MealRepository mealRepository) {
         this.mealRepository = mealRepository;
-        this.mapper = mapper;
     }
 
     @Override
@@ -41,7 +41,6 @@ public class MealServiceImpl implements MealService {
                         DateTimeUtil.isBetween(meal.getTime(), startDate.toLocalTime(), endDate.toLocalTime()),
                 userId);
         return meals.stream().map(meal -> mapper.mealToMealDto(meal)).collect(toList());
-
     }
 
     @Override
@@ -59,5 +58,10 @@ public class MealServiceImpl implements MealService {
     @Override
     public void delete(Integer id, int userId) {
         mealRepository.delete(id, userId);
+    }
+
+    @Autowired
+    public void setMealRepository(MealRepository mealRepository) {
+        this.mealRepository = mealRepository;
     }
 }

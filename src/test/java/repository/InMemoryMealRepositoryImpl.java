@@ -1,7 +1,8 @@
-package ru.javawebinar.topjava.repository;
+package repository;
 
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.repository.MealRepository;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;

@@ -11,27 +11,6 @@
         <param-value>WEB-INF/application-context.xml</param-value>
     </context-param>
 
-    <filter>
-        <filter-name>PerformanceFilter</filter-name>
-        <filter-class>ru.javawebinar.topjava.filters.PerformanceFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>PerformanceFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter>
-        <filter-name>MyFirstFilter</filter-name>
-        <filter-class>ru.javawebinar.topjava.filters.PrintParametersFilter</filter-class>
-        <init-param>
-            <param-name>SomeParam</param-name>
-            <param-value>SomeValue</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>MyFirstFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.user.UserServlet</servlet-class>
@@ -51,10 +30,6 @@
         <url-pattern>/meals/*</url-pattern>
     </servlet-mapping>
 
-
-    <listener>
-        <listener-class>ru.javawebinar.topjava.listeners.MyHttpSessionActivationListener</listener-class>
-    </listener>
     <listener><listener-class>
             org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
