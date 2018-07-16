@@ -38,6 +38,6 @@ public class UserServlet extends HttpServlet {
         User user = controller.get(userId);
         log.debug("redirect to users");
         SecurityUtil.setAuthUserId(user.getId());
-        response.sendRedirect("/meals/getAllMeals");
+        response.sendRedirect(request.getContextPath() + "/meals/getAllMeals");
     }
 }

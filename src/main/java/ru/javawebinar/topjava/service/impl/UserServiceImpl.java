@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
@@ -18,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     @Autowired
-    public UserServiceImpl(@Qualifier("jdbcUsers") UserRepository repository) {
+    public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -49,6 +48,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return null;
+        return repository.getAll();
     }
 }

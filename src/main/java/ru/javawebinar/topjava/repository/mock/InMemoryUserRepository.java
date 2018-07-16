@@ -57,7 +57,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     @PostConstruct
     private void init() {
-        save(UserTestData.USER);
-        save(UserTestData.ADMIN);
+       users.put(UserTestData.USER_ID, UserTestData.USER);
+       users.put(UserTestData.ADMIN_ID, UserTestData.ADMIN);
     }
 }

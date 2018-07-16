@@ -2,16 +2,15 @@ package ru.javawebinar.topjava.repository.mock;
 
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,11 +36,6 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public List<Meal> read(int userId) {
-        return new ArrayList<>(meals.getOrDefault(userId, emptyMap()).values());
-    }
-
-    @Override
     public Meal readById(int id, int userId) {
         return meals.getOrDefault(userId, emptyMap()).get(id);
     }
@@ -60,38 +54,26 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         return meals.getOrDefault(userId, emptyMap()).remove(id) != null;
     }
 
-    @Override
-    public List<Meal> query(Predicate<Meal> predicate, int userId) {
-        return meals.getOrDefault(userId, emptyMap())
-                .values()
-                .stream()
-                .filter(predicate)
-                .collect(Collectors.toList());
-    }
 
     @Override
-    public Meal queryForSingle(Predicate<Meal> predicate, int userId) {
+    public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return meals.getOrDefault(userId, emptyMap())
-                .values()
-                .stream()
-                .filter(predicate)
-                .findFirst()
-                .orElse(null);
+            .values().stream()
+            .filter(meal -> DateTimeUtil.isBetween(meal.getDateTime(), startDate, endDate))
+            .collect(Collectors.toList());
     }
+
 
     @PostConstruct
     private void init() {
-        {
-            Stream.of(
-                    new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Breakfast", 500),
-                    new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Lunch", 1000),
-                    new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Dinner", 500),
-                    new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Breakfast", 1000),
-                    new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Lunch", 500),
-                    new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Dinner", 510))
-                    .forEach(meal -> create(meal, ADMIN_USER_ID));
-        }
+        Stream.of(
+            new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Breakfast", 500),
+            new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Lunch", 1000),
+            new Meal(null, LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Dinner", 500),
+            new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Breakfast", 1000),
+            new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Lunch", 500),
+            new Meal(null, LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Dinner", 510))
+            .forEach(meal -> create(meal, ADMIN_USER_ID));
     }
-
 
 }

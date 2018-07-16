@@ -3,7 +3,7 @@ package ru.javawebinar.topjava.web.meal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.converter.MealDtoToMealWithExceedConverter;
 import ru.javawebinar.topjava.dto.MealDto;
 import ru.javawebinar.topjava.dto.MealWithExceed;
@@ -19,7 +19,7 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMaxWhenEm
 import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMinWhenEmpty;
 import static ru.javawebinar.topjava.util.SecurityUtil.authUserId;
 
-@Controller
+@Component
 public class MealRestController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());

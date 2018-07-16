@@ -10,8 +10,10 @@ import java.util.Locale;
 
 public class DateTimeUtil {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss a",
-            Locale.US);
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss a", Locale.US);
+    public static final DateTimeFormatter DATE_TIME_FORMATTER_DB = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss", Locale.US);
+    public static final LocalDate MIN_LOCAL_DATE = LocalDate.of(1900, 1, 1);
+    public static final LocalDate MAX_LOCAL_DATE = LocalDate.of(2100, 1, 1);
 
     public static <T extends Comparable<? super T>> boolean isBetween(T lt, T start, T end) {
         return lt.compareTo(start) >= 0 && lt.compareTo(end) <= 0;
@@ -30,11 +32,11 @@ public class DateTimeUtil {
     }
 
     public static LocalDateTime getLocalDateTimeMinWhenEmpty(LocalDate date, LocalTime time) {
-        return LocalDateTime.of(date == null ? LocalDate.MIN : date, time == null ? LocalTime.MIN : time);
+        return LocalDateTime.of(date == null ? MIN_LOCAL_DATE : date, time == null ? LocalTime.MIN : time);
     }
 
     public static LocalDateTime getLocalDateTimeMaxWhenEmpty(LocalDate date, LocalTime time) {
-        return LocalDateTime.of(date == null ? LocalDate.MAX : date, time == null ? LocalTime.MAX : time);
+        return LocalDateTime.of(date == null ? MAX_LOCAL_DATE : date, time == null ? LocalTime.MAX : time);
     }
 
 }

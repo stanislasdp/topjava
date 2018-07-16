@@ -2,14 +2,13 @@ package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Meal;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface MealRepository {
 
     Meal create(Meal meal, int userId);
 
-    List<Meal> read(int userId);
 
     Meal readById(int id, int userId);
 
@@ -17,7 +16,6 @@ public interface MealRepository {
 
     boolean delete(Integer id, int userId);
 
-    List<Meal> query(Predicate<Meal> predicate, int userId);
+    List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
 
-    Meal queryForSingle(Predicate<Meal> predicate, int userId);
 }

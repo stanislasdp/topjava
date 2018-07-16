@@ -33,6 +33,7 @@ public class AbstractUserController {
 
     public void delete(int id) {
         log.info("delete {}", id);
+        service.delete(id);
     }
 
     public void update(User user, int id) {

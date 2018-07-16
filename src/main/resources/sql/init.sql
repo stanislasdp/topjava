@@ -1,4 +1,5 @@
 USE topjava;
+DROP TABLE IF EXISTS meals;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
 
@@ -20,4 +21,15 @@ CREATE TABLE user_roles
  user_id INT NOT NULL,
  role    VARCHAR(255),
  CONSTRAINT FK_ID_User_id FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE meals
+(
+id INT NOT NULL AUTO_INCREMENT,
+date_time DATETIME NOT NULL,
+description VARCHAR(255) NOT NULL,
+calories INT(11) NOT NULL,
+PRIMARY KEY (id),
+user_id INT,
+CONSTRAINT FK_ID_Meal_User_ID FOREIGN KEY (user_id) REFERENCES users(id)
 )

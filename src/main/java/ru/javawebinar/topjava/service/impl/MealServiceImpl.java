@@ -7,7 +7,6 @@ import ru.javawebinar.topjava.mapper.MealToMealDtoMapper;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +17,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 @Service
 public class MealServiceImpl implements MealService {
 
+    @Autowired
     private MealRepository mealRepository;
 
     @Autowired
@@ -36,10 +36,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<MealDto> getWithinTime(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        List<Meal> meals = mealRepository.query(
-                meal -> DateTimeUtil.isBetween(meal.getDate(), startDate.toLocalDate(), endDate.toLocalDate()) &&
-                        DateTimeUtil.isBetween(meal.getTime(), startDate.toLocalTime(), endDate.toLocalTime()),
-                userId);
+        List<Meal> meals = mealRepository.getBetween(startDate, endDate, userId);
         return meals.stream().map(meal -> mapper.mealToMealDto(meal)).collect(toList());
     }
 
