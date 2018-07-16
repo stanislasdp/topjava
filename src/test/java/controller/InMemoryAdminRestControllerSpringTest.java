@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,6 +28,9 @@ public class InMemoryAdminRestControllerSpringTest {
     @Autowired
     private AdminRestController controller;
 
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
     @Test
     public void testDelete() {
         controller.delete(UserTestData.USER_ID);
@@ -41,8 +45,8 @@ public class InMemoryAdminRestControllerSpringTest {
         List<User> allUsers = controller.getAll();
 
         assertThat(allUsers)
-            .hasSize(2)
-            .containsExactlyInAnyOrder(UserTestData.ADMIN, UserTestData.USER);
+                .hasSize(2)
+                .containsExactlyInAnyOrder(UserTestData.ADMIN, UserTestData.USER);
     }
 
     @Test
@@ -63,7 +67,7 @@ public class InMemoryAdminRestControllerSpringTest {
     @Test
     public void testUpdate() {
         User updatedUser = new User(1, "some_new__updated_user", "new_updated_email@com", "new_updated_password", 2000, true,
-            Collections.singleton(Role.ROLE_USER));
+                Collections.singleton(Role.ROLE_USER));
 
         controller.update(updatedUser, updatedUser.getId());
 

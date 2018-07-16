@@ -1,11 +1,13 @@
 package ru.javawebinar.topjava.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
@@ -16,12 +18,14 @@ import java.util.List;
 
 import static java.util.Collections.singletonMap;
 
+@Component
 public class UserRepositoryJdbcImpl implements UserRepository {
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
 
+    @Autowired
     public UserRepositoryJdbcImpl(NamedParameterJdbcTemplate jdbcTemplate, SimpleJdbcInsert simpleJdbcInsert) {
         this.jdbcTemplate = jdbcTemplate;
         this.simpleJdbcInsert = simpleJdbcInsert;

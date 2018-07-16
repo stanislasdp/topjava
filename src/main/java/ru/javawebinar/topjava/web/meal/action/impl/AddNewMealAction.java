@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.dto.MealDto;
-import ru.javawebinar.topjava.dto.MealWithExceed;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.meal.action.Action;
 
@@ -32,7 +31,7 @@ public class AddNewMealAction implements Action {
     @Override
     @SneakyThrows
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("meal", new MealWithExceed());
+        request.setAttribute("meal", new MealDto());
         request.getRequestDispatcher("/meal.jsp").forward(request, response);
     }
 

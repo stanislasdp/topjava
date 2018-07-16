@@ -12,10 +12,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.MealRepositoryJdbcImpl;
-import ru.javawebinar.topjava.repository.UserRepository;
-import ru.javawebinar.topjava.repository.UserRepositoryJdbcImpl;
 
 @Configuration
 @Import(ApplicationConfiguration.class)
@@ -55,15 +51,5 @@ public class DatabaseConfiguration {
     @Bean
     public SimpleJdbcInsert simpleJdbcInsert() {
         return new SimpleJdbcInsert(dataSource());
-    }
-
-    @Bean
-    public UserRepository userRepository() {
-        return new UserRepositoryJdbcImpl(jdbcTemplate(), simpleJdbcInsert());
-    }
-
-    @Bean
-    public MealRepository mealRepository() {
-        return new MealRepositoryJdbcImpl(jdbcTemplate(), simpleJdbcInsert());
     }
 }

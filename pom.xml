@@ -27,6 +27,7 @@
         <org.lombok.version>1.18.0</org.lombok.version>
         <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
         <mysql-connector-java.version>8.0.11</mysql-connector-java.version>
+        <com.h2database.version>1.4.194</com.h2database.version>
 
     </properties>
 
@@ -201,6 +202,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${com.h2database.version}</version>
         </dependency>
     </dependencies>
 </project>
