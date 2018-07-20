@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.repository.mock;
 
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.util.DateTimeUtil;
+import ru.javawebinar.topjava.util.GenericUtils;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -59,10 +59,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return meals.getOrDefault(userId, emptyMap())
             .values().stream()
-            .filter(meal -> DateTimeUtil.isBetween(meal.getDateTime(), startDate, endDate))
+            .filter(meal -> GenericUtils.isBetween(meal.getDateTime(), startDate, endDate))
             .collect(Collectors.toList());
     }
-
 
     @PostConstruct
     private void init() {

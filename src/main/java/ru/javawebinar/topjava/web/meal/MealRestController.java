@@ -12,11 +12,13 @@ import ru.javawebinar.topjava.util.SecurityUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMaxWhenEmpty;
-import static ru.javawebinar.topjava.util.DateTimeUtil.getLocalDateTimeMinWhenEmpty;
+import static ru.javawebinar.topjava.util.DateTimeUtil.MAX_LOCAL_DATE;
+import static ru.javawebinar.topjava.util.DateTimeUtil.MIN_LOCAL_DATE;
+import static ru.javawebinar.topjava.util.GenericUtils.getOrDefault;
 import static ru.javawebinar.topjava.util.SecurityUtil.authUserId;
 
 @Component
@@ -41,9 +43,9 @@ public class MealRestController {
                                             LocalTime startTime, LocalTime endTime) {
         log.info("getAll");
         List<MealDto> meals = service.getWithinTime(
-                getLocalDateTimeMinWhenEmpty(startDate, startTime),
-                getLocalDateTimeMaxWhenEmpty(endDate, endTime),
-                authUserId());
+            LocalDateTime.of(getOrDefault(startDate, MIN_LOCAL_DATE), getOrDefault(startTime, LocalTime.MIN)),
+            LocalDateTime.of(getOrDefault(endDate, MAX_LOCAL_DATE), getOrDefault(endTime, LocalTime.MIN)),
+            authUserId());
         return mealDtoToMealWithExceedConverter.convert(meals, SecurityUtil.authUserCaloriesPerDay());
     }
 
