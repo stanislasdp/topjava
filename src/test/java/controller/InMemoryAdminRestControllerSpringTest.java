@@ -5,8 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Role;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = TestDatabaseConfiguration.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+//@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"/sql/init.sql", "/sql/populate.sql"})
 public class InMemoryAdminRestControllerSpringTest {
 
     @Autowired
@@ -30,6 +30,9 @@ public class InMemoryAdminRestControllerSpringTest {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Test
     public void testDelete() {
@@ -57,7 +60,8 @@ public class InMemoryAdminRestControllerSpringTest {
 
     @Test
     public void testCreate() {
-        User user = new User(null, "some_new_user", "new_email@com", "new_password", 2000, true, Collections.singleton(Role.ROLE_USER));
+        User user = new User(null, "some_new_user", "new_email@com", "new_password", 2000, true,
+            Collections.singleton(Role.ROLE_USER));
 
         controller.create(user);
 
@@ -67,7 +71,7 @@ public class InMemoryAdminRestControllerSpringTest {
     @Test
     public void testUpdate() {
         User updatedUser = new User(1, "some_new__updated_user", "new_updated_email@com", "new_updated_password", 2000, true,
-                Collections.singleton(Role.ROLE_USER));
+            Collections.singleton(Role.ROLE_USER));
 
         controller.update(updatedUser, updatedUser.getId());
 

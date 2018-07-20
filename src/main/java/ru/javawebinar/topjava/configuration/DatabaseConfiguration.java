@@ -35,7 +35,7 @@ public class DatabaseConfiguration {
     @Bean
     public DataSourceInitializer dataSourceInitializer() {
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        databasePopulator.addScript(new ClassPathResource("sql/init.sql"));
+        databasePopulator.addScript(new ClassPathResource("/sql/init.sql"));
         databasePopulator.addScript(new ClassPathResource("/sql/populate.sql"));
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource());
