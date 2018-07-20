@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.RowMapper;
@@ -44,8 +45,9 @@ public class MealRepositoryJdbcImpl implements MealRepository {
 
     @Override
     public Meal readById(int id, int userId) {
-        return DataAccessUtils.singleResult(jdbcTemplate.query("SELECT * FROM meals where id=:id and user_id=:userId",
-            ImmutableMap.of("userId", userId, "id", id), mealRowMapper()));
+        List<Meal> meals = jdbcTemplate.query("SELECT * FROM meals where id=:id and user_id=:userId",
+            ImmutableMap.of("userId", userId, "id", id), mealRowMapper());
+        return CollectionUtils.isEmpty(meals) ? null : DataAccessUtils.singleResult(meals);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class MealRepositoryJdbcImpl implements MealRepository {
                 .addValue("endDate", endDate.format(DATE_TIME_FORMATTER_DB))
                 .addValue("userId", userId);
         return jdbcTemplate.query("SELECT * FROM meals WHERE (date_time BETWEEN :startDate and :endDate) " +
-                        "and user_id=:userId", parameterSource, mealRowMapper());
+                        "and user_id=:userId ORDER BY date_time DESC", parameterSource, mealRowMapper());
     }
 
     private RowMapper<Meal> mealRowMapper() {
